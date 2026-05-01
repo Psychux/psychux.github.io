@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Questionnaire d’expérience</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Questionnaire d’expérience</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <p>
+          Pour chaque affirmation, indiquez dans quelle mesure vous êtes d’accord
+          avec ce qui est proposé.
+        </p>
+
+        <p>
+          Il n’y a pas de bonne ou de mauvaise réponse. Répondez en fonction de votre
+          expérience pendant la phase que vous venez de réaliser.
+        </p>
+      </div>
+
+      <form id="formSPES">
+        <div id="questionsSPES">
+
+          <div class="likert-question">
+            <h2>J'avais l'impression d'être vraiment sur place dans le jeu.</h2>
+            <div class="likert-scale">
+              <label>
+                <input type="radio" name="spes_01" value="1" />
+                <span class="likert-number">1</span>
+                <span class="likert-label">Pas du tout d'accord</span>
+              </label>
+
+              <label>
+                <input type="radio" name="spes_01" value="2" />
+                <span class="likert-number">2</span>
+              </label>
+
+              <label>
+                <input type="radio" name="spes_01" value="3" />
+                <span class="likert-number">3</span>
+              </label>
+
+              <label>
+                <input type="radio" name="spes_01" value="4" />
+                <span class="likert-number">4</span>
+              </label>
+
+              <label>
+                <input type="radio" name="spes_01" value="5" />
+                <span class="likert-number">5</span>
+                <span class="likert-label">Tout à fait d'accord</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>J'avais l'impression de participer activement dans le jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_02" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_02" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_02" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_02" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_02" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>C'était comme si ma véritable position s'était déplacée vers le jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_03" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_03" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_03" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_03" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_03" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>J'avais l'impression d'être physiquement présent dans le jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_04" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_04" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_04" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_04" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_04" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>Les objets dans le jeu m'ont donné l'impression que je pouvais les utiliser pour faire des choses avec eux.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_05" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_05" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_05" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_05" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_05" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>J'avais l'impression de pouvoir agir activement dans le jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_06" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_06" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_06" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_06" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_06" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>J'avais l'impression de pouvoir me déplacer parmi les objets du jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_07" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_07" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_07" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_07" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_07" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+          <div class="likert-question">
+            <h2>J'avais l'impression de pouvoir faire tout ce que je voulais dans le jeu.</h2>
+            <div class="likert-scale">
+              <label><input type="radio" name="spes_08" value="1" /><span class="likert-number">1</span><span class="likert-label">Pas du tout d'accord</span></label>
+              <label><input type="radio" name="spes_08" value="2" /><span class="likert-number">2</span></label>
+              <label><input type="radio" name="spes_08" value="3" /><span class="likert-number">3</span></label>
+              <label><input type="radio" name="spes_08" value="4" /><span class="likert-number">4</span></label>
+              <label><input type="radio" name="spes_08" value="5" /><span class="likert-number">5</span><span class="likert-label">Tout à fait d'accord</span></label>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="button" id="boutonContinuer" class="success">
+          Continuer
+        </button>
+
+        <div id="messageErreur" class="message warning"></div>
+      </form>
+    </section>
+  </main>
+</body>
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+      randomiserOrdreQuestions("questionsSPES");
+
+      const phase = getPhaseFromUrl("");
+
+      if (!phase) {
+        showError("Erreur : aucune phase n’est indiquée. Veuillez appeler l’expérimentateur.");
+      }
+
+      document.getElementById("boutonContinuer").addEventListener("click", function () {
+        if (!phase) {
+          showError("Erreur : aucune phase n’est indiquée. Veuillez appeler l’expérimentateur.");
+          return;
+        }
+
+        const responses = requireAllRadioGroups(
+          [
+            "spes_01",
+            "spes_02",
+            "spes_03",
+            "spes_04",
+            "spes_05",
+            "spes_06",
+            "spes_07",
+            "spes_08"
+          ],
+          "Veuillez répondre à tous les items avant de continuer."
+        );
+
+        if (responses === null) {
+          return;
+        }
+
+        const numericResponses = {};
+
+        for (const key in responses) {
+          numericResponses[key] = Number(responses[key]);
+        }
+
+        saveSPESResponses({
+          phase: phase,
+          startTime: startTime,
+          responses: numericResponses
+        });
+
+        goToEffort(phase);
+      });
+    }
+  </script>
+</body>
+</html>

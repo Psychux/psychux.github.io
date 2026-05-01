@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Effort mental</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Questionnaire d’effort mental</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <p>
+          Indiquez l’effort mental que vous estimez avoir fourni pendant la phase que vous venez de réaliser.
+        </p>
+      </div>
+
+      <form id="formEffort">
+        <div class="range-container">
+          <label for="effortMental">
+            Effort mental fourni pendant cette phase
+          </label>
+
+          <input
+            id="effortMental"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="50"
+          />
+
+          <div class="range-labels">
+            <span>Extrêmement faible</span>
+            <span>Extrêmement élevé</span>
+          </div>
+
+          <div class="range-value">
+            Valeur sélectionnée : <span id="valeurEffort">50</span>
+          </div>
+        </div>
+
+        <button type="button" id="boutonContinuer" class="success">
+          Continuer
+        </button>
+
+        <div id="messageErreur" class="message warning"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      const phase = getPhaseFromUrl("");
+
+      if (!phase) {
+        showError("Erreur : aucune phase n’est indiquée. Veuillez appeler l’expérimentateur.");
+      }
+
+      const effortInput = document.getElementById("effortMental");
+      const valeurEffort = document.getElementById("valeurEffort");
+
+      effortInput.addEventListener("input", function () {
+        valeurEffort.textContent = effortInput.value;
+      });
+
+      document.getElementById("boutonContinuer").addEventListener("click", function () {
+        if (!phase) {
+          showError("Erreur : aucune phase n’est indiquée. Veuillez appeler l’expérimentateur.");
+          return;
+        }
+
+        const effortMental = requireRangeValue(
+          "effortMental",
+          "Veuillez indiquer l’effort mental fourni avant de continuer."
+        );
+
+        if (effortMental === null) {
+          return;
+        }
+
+        saveEffortMentalResponse({
+          phase: phase,
+          startTime: startTime,
+          effortMental: effortMental
+        });
+
+        goToNextPhaseAfterEffort(phase);
+      });
+    }
+  </script>
+</body>
+</html>

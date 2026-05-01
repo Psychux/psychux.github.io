@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Phase 3</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main class="video-page">
+    <h1>Phase 3</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="video-container">
+        <video controls>
+          <source src="../assets/videos/p3_si.mp4" type="video/mp4" />
+          Votre navigateur ne permet pas de lire cette vidéo.
+        </video>
+      </div>
+
+      <div class="commandes">
+        <img src="../assets/images/clavier_mouvements.png" alt="Rappel des commandes clavier pour les mouvements" />
+        <img src="../assets/images/clavier_interaction.png" alt="Rappel des commandes clavier pour les interactions" />
+        <img src="../assets/images/souris_interaction.png" alt="Rappel des commandes souris pour les interactions" />
+      </div>
+
+      <button id="boutonContinuer" class="success">
+        Continuer
+      </button>
+
+      <div id="messageErreur" class="message warning"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      document.getElementById("boutonContinuer").addEventListener("click", function () {
+        const entry = {
+          ...createBaseEntry({
+            questionnaire: "page_video",
+            phase: "phase3",
+            startTime: startTime
+          }),
+          page_video_vue: true
+        };
+
+        saveDataEntry(entry);
+
+        goToSPES("phase3");
+      });
+    }
+  </script>
+</body>
+</html>

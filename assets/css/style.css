@@ -1,0 +1,282 @@
+body {
+  margin: 0;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  color: #222;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 24px;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #2f6fed;
+  color: white;
+}
+
+button:hover {
+  background-color: #2459c7;
+}
+
+button.secondary {
+  background-color: #555;
+}
+
+button.secondary:hover {
+  background-color: #333;
+}
+
+button.success {
+  background-color: #22863a;
+}
+
+button.success:hover {
+  background-color: #176f2c;
+}
+
+.message {
+  margin-top: 24px;
+  padding: 14px;
+  border-radius: 8px;
+  background-color: #e8f2ff;
+  border: 1px solid #b7d7ff;
+  display: none;
+}
+
+.warning {
+  background-color: #fff4d6;
+  border: 1px solid #ffd36a;
+}
+
+.hidden {
+  display: none;
+}
+
+.info-line {
+  margin: 6px 0;
+}
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 24px;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: auto;
+  margin-top: 4px;
+}
+
+.button-danger {
+  background-color: #b42318;
+}
+
+.button-danger:hover {
+  background-color: #8f1d14;
+}
+
+.consent-text {
+  line-height: 1.6;
+}
+
+.consent-text h2 {
+  margin-top: 28px;
+}
+
+.consent-text p {
+  margin-bottom: 12px;
+}
+h1,
+h2 {
+  color: #1f5fae;
+}
+.question-block {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #ddd;
+}
+
+.question-block h2 {
+  font-size: 1.1rem;
+  color: #1f5fae;
+}
+
+.radio-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.radio-scale label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: normal;
+  line-height: 1.4;
+  background-color: #f7f9fc;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.radio-scale input[type="radio"] {
+  width: auto;
+  margin-top: 3px;
+}
+.video-page {
+  max-width: 1200px;
+}
+
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.video-container video {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+.commandes {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.commandes img {
+  width: 33%;
+  max-width: 380px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: white;
+}
+.likert-question {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #ddd;
+}
+
+.likert-question h2 {
+  font-size: 1.1rem;
+  color: #1f5fae;
+}
+
+.likert-scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.likert-scale label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 52px;
+  padding: 6px 4px;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f7f9fc;
+
+  font-weight: normal;
+  text-align: center;
+  cursor: pointer;
+}
+
+.likert-scale input[type="radio"] {
+  width: auto;
+  margin: 0 0 4px 0;
+}
+
+.likert-number {
+  font-weight: bold;
+  color: #1f5fae;
+  margin-bottom: 2px;
+}
+
+.likert-label {
+  font-size: 0.75rem;
+  line-height: 1.15;
+}
+.range-container {
+  margin-top: 36px;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.range-value {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1f5fae;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 20px;
+}

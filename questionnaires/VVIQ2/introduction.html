@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>VVIQ-2 - Introduction</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Vividness of Visual Imagery Questionnaire 2</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <h2>Version française</h2>
+
+        <p>
+          <strong>VIVIDNESS OF VISUAL IMAGERY QUESTIONNAIRE 2 - Version Française</strong>
+        </p>
+
+        <p>
+          Version française traduite par Santarpia, A., Blanchet, A., Poinsot, R.,
+          Lambert, J.-F., Mininni, G., &amp; Thizon-Vidal, S. (2008).
+          <em>Évaluer la vivacité des images mentales dans différentes populations françaises.</em>
+          Pratiques Psychologiques, L’accompagnement psychologique 2, 14(3), 421-441.
+          https://doi.org/10.1016/j.prps.2007.11.001
+        </p>
+
+        <h2>Introduction</h2>
+
+        <p>
+          Grâce au tableau ci-dessous, vous allez explorer le niveau de vivacité de l’image
+          mentale évoquée par chaque proposition au moyen d’une échelle en 5 points.
+        </p>
+
+        <p>
+          Vous allez explorer les images mentales obtenues avec les yeux fermés (YF).
+          Exécutez bien toutes les propositions. Essayez de faire chaque item du questionnaire
+          sans être influencé par l’item précédent.
+        </p>
+
+        <h2>Échelle de réponse</h2>
+
+        <p>
+          L’image mentale évoquée par une proposition peut correspondre à :
+        </p>
+
+        <table class="scale-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Aucune image n’est visible.</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>L’image est vague et imprécise.</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>L’image est moyennement nette et vivace.</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>L’image est relativement nette, presque aussi précise et vivace qu’une perception.</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>L’image est parfaitement nette, aussi précise et vivace qu’une véritable perception.</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Lorsque vous êtes prêt(e), cliquez sur le bouton ci-dessous pour commencer le questionnaire.
+        </p>
+      </div>
+
+      <button id="boutonCommencer" class="success">
+        Commencer le VVIQ-2
+      </button>
+
+      <div id="messageErreur" class="message warning"></div>
+    </section>
+  </main>
+
+  <script src="../../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      document.getElementById("boutonCommencer").addEventListener("click", function () {
+        const entry = {
+          ...createBaseEntry({
+            questionnaire: "vviq2_introduction",
+            phase: "pre_experience",
+            startTime: startTime
+          }),
+          vviq2_introduction_lue: true
+        };
+
+        saveDataEntry(entry);
+
+        window.location.href = "vviq01_04.html";
+      });
+    }
+  </script>
+</body>
+</html>

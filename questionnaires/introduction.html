@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Introduction générale</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Introduction générale</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <p>
+          Pour la suite, l’objectif général est d’étudier l’expérience des joueurs.
+          Pendant environ 30 minutes, vous allez explorer le jeu <em>Medieval Dynasty</em>.
+          Cette expérience est découpée en plusieurs phases d'environ 5 minutes.
+        </p>
+
+        <p>
+          Il ne s’agit pas d’un test de performance et ce n'est pas chronométré.
+          Il n’y a pas de bonne ou de mauvaise manière de jouer. Nous nous intéressons
+          uniquement à votre expérience.
+        </p>
+
+        <h2>Ce qui est attendu concrètement</h2>
+
+        <p>
+          Le jeu est déjà lancé sur l’écran principal avec une sauvegarde spécifique.
+          Votre personnage se situe à l’intérieur d’une habitation dans un petit village.
+        </p>
+
+        <p>
+          Vous allez commencer par une phase de familiarisation avec le jeu et les consignes audio,
+          ce qui vous aidera à comprendre comment se déroule l’expérience.
+        </p>
+
+        <p>
+          Quand vous aurez appuyé sur le bouton <strong>Commencer</strong> sur cet écran,
+          un lecteur vidéo sera affiché.
+        </p>
+
+        <p>
+          Vous devrez commencer par lancer la vidéo. Celle-ci contient une consigne audio
+          que vous devez écouter avec le casque sur vos oreilles, mais sans jouer au jeu
+          pendant que vous l’écoutez. Prenez le temps de bien l’écouter sans avoir les yeux fermés.
+        </p>
+
+        <p>
+          À la fin de la consigne, réalisez la tâche donnée par consigne audio.
+          À tout moment, vous pouvez consulter cet écran pour avoir un rappel des commandes utiles
+          en jeu. Ce rappel se situe sous la vidéo que vous aurez écoutée.
+        </p>
+
+        <p>
+          Une fois que vous avez réalisé la tâche demandée par la consigne, retournez sur cet écran
+          et passez à la section suivante en appuyant sur le bouton <strong>Continuer</strong>.
+          Vous devrez alors répondre à quelques questions sur votre expérience de jeu.
+        </p>
+
+        <p>
+          Quand vous aurez fini de répondre, cela terminera la phase. Vous pouvez passer
+          à la section suivante, en commençant par écouter la prochaine consigne audio et ainsi de suite.
+          Après la phase de familiarisation, vous aurez à faire ces étapes quatre fois au total.
+        </p>
+
+        <p>
+          Vous commencerez donc par une phase de familiarisation. Si vous en avez besoin,
+          les actions de base que vous pouvez effectuer dans le jeu sont indiquées en dessous
+          de la vidéo contenant les consignes audio.
+        </p>
+
+        <h2>Règles importantes</h2>
+
+        <p>Pendant que vous jouez :</p>
+
+        <ul>
+          <li>Essayez de rester concentré sur ce que demandait la consigne.</li>
+          <li>Évitez d’improviser ou de vous fixer des objectifs personnels.</li>
+          <li>Si vous avez un problème technique, prévenez l'expérimentateur immédiatement.</li>
+        </ul>
+
+        <h2>Avant de commencer</h2>
+
+        <p>
+          Si tout est clair, vous pouvez mettre le casque sur vos oreilles et passer
+          à la section suivante pour lancer la vidéo.
+        </p>
+      </div>
+
+      <button id="boutonCommencer" class="success">
+        Commencer
+      </button>
+
+      <div id="messageErreur" class="message warning"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      document.getElementById("boutonCommencer").addEventListener("click", function () {
+        const entry = {
+          ...createBaseEntry({
+            questionnaire: "introduction_generale",
+            phase: "pre_experience",
+            startTime: startTime
+          }),
+          introduction_generale_lue: true
+        };
+
+        saveDataEntry(entry);
+
+        goToConditionFamiliarisation();
+      });
+    }
+  </script>
+</body>
+</html>

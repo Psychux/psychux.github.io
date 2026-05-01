@@ -3,74 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IVS - Familiarisation</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 30px;
-      font-family: Arial, sans-serif;
-      background-color: #fafafa;
-      color: #222;
-    }
+  <title>Phase de familiarisation</title>
 
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      align-items: center;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    video {
-      width: 100%;
-      max-width: 900px;
-      border-radius: 8px;
-      background-color: #000;
-    }
-
-    .commandes {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .commandes img {
-      width: 33%;
-      max-width: 380px;
-      height: 200px;
-      object-fit: contain;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      background-color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 
 <body>
-  <main>
+  <main class="video-page">
     <h1>Phase de familiarisation</h1>
 
-    <video controls>
-      <source src="../assets/videos/p0_ivs.mp4" type="video/mp4" />
-      Votre navigateur ne permet pas de lire cette vidéo.
-    </video>
+    <section class="card">
+      <p id="infosParticipant"></p>
 
-    <div class="commandes">
-      <img src="../assets/images/clavier_mouvements.png" alt="Rappel des commandes clavier pour les mouvements" />
-      <img src="../assets/images/clavier_interaction.png" alt="Rappel des commandes clavier pour les interactions" />
-      <img src="../assets/images/souris_interaction.png" alt="Rappel des commandes souris pour les interactions" />
-    </div>
+      <div class="video-container">
+        <video controls>
+          <source src="../assets/videos/p0_ivs.mp4" type="video/mp4" />
+          Votre navigateur ne permet pas de lire cette vidéo.
+        </video>
+      </div>
+
+      <div class="commandes">
+        <img src="../assets/images/clavier_mouvements.png" alt="Rappel des commandes clavier pour les mouvements" />
+        <img src="../assets/images/clavier_interaction.png" alt="Rappel des commandes clavier pour les interactions" />
+        <img src="../assets/images/souris_interaction.png" alt="Rappel des commandes souris pour les interactions" />
+      </div>
+
+      <button id="boutonContinuer" class="success">
+        Continuer
+      </button>
+
+      <div id="messageErreur" class="message warning"></div>
+    </section>
   </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      document.getElementById("boutonContinuer").addEventListener("click", function () {
+        const entry = {
+          ...createBaseEntry({
+            questionnaire: "page_video",
+            phase: "familiarisation",
+            startTime: startTime
+          }),
+          page_video_vue: true
+        };
+
+        saveDataEntry(entry);
+
+        goToSPES("familiarisation");
+      });
+    }
+  </script>
 </body>
 </html>

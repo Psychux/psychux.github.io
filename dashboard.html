@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tableau de bord - Protocole</title>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Tableau de bord expérimentateur</h1>
+
+    <section class="card">
+      <h2>Initialisation du participant</h2>
+
+      <label for="participant">Numéro du participant</label>
+      <input id="participant" type="text" placeholder="Exemple : P128" />
+
+      <label for="condition">Condition expérimentale</label>
+      <select id="condition">
+        <option value="">Sélectionner une condition</option>
+        <option value="ivs">IVS</option>
+        <option value="im">IM</option>
+        <option value="si">SI</option>
+      </select>
+
+      <button id="boutonEnregistrer">Enregistrer</button>
+
+      <div id="message" class="message"></div>
+
+      <button id="boutonDemarrer" class="success hidden">
+        Démarrer le protocole
+      </button>
+    </section>
+
+    <section class="card">
+      <div id="sessionInfo">
+        <h2>Session active</h2>
+        <p>Aucune session participant n’est actuellement enregistrée.</p>
+      </div>
+
+      <button id="boutonReinitialiser" class="secondary">
+        Réinitialiser la session
+      </button>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>VVIQ-2 - Items 9 à 12</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>VVIQ-2 — Items 9 à 12</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <h2>Les yeux fermés</h2>
+
+        <p>
+          <strong>
+            ITEMS 9–12 (YF) : Imaginez un magasin dans lequel vous allez souvent.
+            Analysez en détail l’image qui vous vient à l’esprit.
+          </strong>
+        </p>
+
+        <p>
+          Pour chaque proposition, indiquez le niveau de vivacité de l’image mentale évoquée.
+        </p>
+      </div>
+
+      <form id="formVVIQ">
+        <div class="question-block">
+          <h2>9. La devanture du magasin qui se trouve de l’autre côté de la rue :</h2>
+          <div class="radio-scale">
+            <label><input type="radio" name="vviq_09" value="1" /> 1 — Aucune image n’est visible.</label>
+            <label><input type="radio" name="vviq_09" value="2" /> 2 — L’image est vague et imprécise.</label>
+            <label><input type="radio" name="vviq_09" value="3" /> 3 — L’image est moyennement claire et nette.</label>
+            <label><input type="radio" name="vviq_09" value="4" /> 4 — L’image est relativement claire, presque aussi nette et précise qu’une perception.</label>
+            <label><input type="radio" name="vviq_09" value="5" /> 5 — L’image est parfaitement claire, aussi nette et précise qu’une véritable perception.</label>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>10. Une vitrine avec les couleurs, la forme et les détails des articles en vente :</h2>
+          <div class="radio-scale">
+            <label><input type="radio" name="vviq_10" value="1" /> 1 — Aucune image n’est visible.</label>
+            <label><input type="radio" name="vviq_10" value="2" /> 2 — L’image est vague et imprécise.</label>
+            <label><input type="radio" name="vviq_10" value="3" /> 3 — L’image est moyennement claire et nette.</label>
+            <label><input type="radio" name="vviq_10" value="4" /> 4 — L’image est relativement claire, presque aussi nette et précise qu’une perception.</label>
+            <label><input type="radio" name="vviq_10" value="5" /> 5 — L’image est parfaitement claire, aussi nette et précise qu’une véritable perception.</label>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>11. Vous êtes proche de l’entrée. La couleur, la forme et les détails de la porte :</h2>
+          <div class="radio-scale">
+            <label><input type="radio" name="vviq_11" value="1" /> 1 — Aucune image n’est visible.</label>
+            <label><input type="radio" name="vviq_11" value="2" /> 2 — L’image est vague et imprécise.</label>
+            <label><input type="radio" name="vviq_11" value="3" /> 3 — L’image est moyennement claire et nette.</label>
+            <label><input type="radio" name="vviq_11" value="4" /> 4 — L’image est relativement claire, presque aussi nette et précise qu’une perception.</label>
+            <label><input type="radio" name="vviq_11" value="5" /> 5 — L’image est parfaitement claire, aussi nette et précise qu’une véritable perception.</label>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>12. Vous entrez dans le magasin et vous allez vers la caisse. Le commerçant vous sert. Vous lui donnez l’argent qu’il prend :</h2>
+          <div class="radio-scale">
+            <label><input type="radio" name="vviq_12" value="1" /> 1 — Aucune image n’est visible.</label>
+            <label><input type="radio" name="vviq_12" value="2" /> 2 — L’image est vague et imprécise.</label>
+            <label><input type="radio" name="vviq_12" value="3" /> 3 — L’image est moyennement claire et nette.</label>
+            <label><input type="radio" name="vviq_12" value="4" /> 4 — L’image est relativement claire, presque aussi nette et précise qu’une perception.</label>
+            <label><input type="radio" name="vviq_12" value="5" /> 5 — L’image est parfaitement claire, aussi nette et précise qu’une véritable perception.</label>
+          </div>
+        </div>
+
+        <button type="button" id="boutonContinuer" class="success">
+          Continuer
+        </button>
+
+        <div id="messageErreur" class="message warning"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      document.getElementById("boutonContinuer").addEventListener("click", function () {
+        const responses = requireAllRadioGroups(
+          ["vviq_09", "vviq_10", "vviq_11", "vviq_12"],
+          "Veuillez répondre à tous les items avant de continuer."
+        );
+
+        if (responses === null) {
+          return;
+        }
+
+        const existingTemp = JSON.parse(localStorage.getItem("vviq2_temp") || "{}");
+
+        const updatedTemp = {
+          ...existingTemp,
+          date_heure_debut_vviq09_12: startTime.toISOString(),
+          date_heure_fin_vviq09_12: new Date().toISOString(),
+          ...responses
+        };
+
+        localStorage.setItem("vviq2_temp", JSON.stringify(updatedTemp));
+
+        window.location.href = "vviq13_16.html";
+      });
+    }
+  </script>
+</body>
+</html>
