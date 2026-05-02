@@ -37,10 +37,33 @@
     </section>
 
     <section class="card">
-      <div id="sessionInfo">
-        <h2>Session active</h2>
-        <p>Aucune session participant n’est actuellement enregistrée.</p>
-      </div>
+     <div id="sessionInfo">
+      
+      <button id="boutonReprendre" class="secondary hidden">
+       Reprendre la session
+      </button>
+
+      <h2>Session active</h2>
+      <p>Aucune session participant n’est actuellement enregistrée.</p>
+     </div>
+
+     <button id="boutonAfficherDonnees" class="secondary hidden">
+       Vérifier les données enregistrées
+     </button>
+
+     <button id="boutonExporterJSON" class="secondary hidden">
+        Exporter les données détaillées JSON
+     </button>
+
+     <button id="boutonExporterSyntheseJSON" class="secondary hidden">
+        Exporter la synthèse JSON
+     </button>
+
+      <button id="boutonExporterSyntheseCSV" class="secondary hidden">
+        Exporter la synthèse CSV
+      </button>
+
+      <div id="resumeDonnees" class="message" style="display: none;"></div>
 
       <button id="boutonReinitialiser" class="secondary">
         Réinitialiser la session

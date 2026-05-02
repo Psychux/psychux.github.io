@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Informations complémentaires</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Informations complémentaires</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <p>
+          Les questions suivantes permettent de décrire l’échantillon et de contextualiser les réponses.
+          Il n’y a pas de bonne ou de mauvaise réponse.
+        </p>
+      </div>
+
+      <form id="formSociodemographie">
+
+        <div class="question-block">
+          <h2>Lorsque vous jouez à un jeu vidéo, quel type de vue préférez-vous généralement ?</h2>
+
+          <div class="radio-scale">
+            <label>
+              <input type="radio" name="preference_vue" value="premiere_personne" />
+              Vue à la première personne
+            </label>
+
+            <label>
+              <input type="radio" name="preference_vue" value="troisieme_personne" />
+              Vue à la troisième personne
+            </label>
+
+            <label>
+              <input type="radio" name="preference_vue" value="dessus_isometrique" />
+              Vue de dessus / isométrique
+            </label>
+
+            <label>
+              <input type="radio" name="preference_vue" value="pas_de_preference" />
+              Je n’ai pas de préférence
+            </label>
+
+            <label>
+              <input type="radio" name="preference_vue" value="ne_sais_pas" />
+              Je ne sais pas
+            </label>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>Avant cette expérience, connaissiez-vous le jeu <em>Medieval Dynasty</em> ?</h2>
+
+          <div class="radio-scale">
+            <label>
+              <input type="radio" name="connaissance_medieval_dynasty" value="non_pas_du_tout" />
+              Non, pas du tout
+            </label>
+
+            <label>
+              <input type="radio" name="connaissance_medieval_dynasty" value="oui_de_nom" />
+              Oui, seulement de nom
+            </label>
+
+            <label>
+              <input type="radio" name="connaissance_medieval_dynasty" value="oui_images_videos" />
+              Oui, j’avais déjà vu des images ou vidéos du jeu
+            </label>
+
+            <label>
+              <input type="radio" name="connaissance_medieval_dynasty" value="oui_deja_joue" />
+              Oui, j’y avais déjà joué
+            </label>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>Comment estimez-vous votre niveau de fatigue général le jour de l’expérience ?</h2>
+
+          <div class="range-container">
+            <input
+              id="fatigueGenerale"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value="50"
+            />
+
+            <div class="range-labels">
+              <span>Pas du tout fatigué(e)</span>
+              <span>Extrêmement fatigué(e)</span>
+            </div>
+
+            <div class="range-value">
+              Valeur sélectionnée : <span id="valeurFatigue">50</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <h2>Quel est votre âge ?</h2>
+
+          <input
+            id="age"
+            type="number"
+            min="18"
+            max="99"
+            placeholder="Indiquez votre âge"
+          />
+        </div>
+
+        <div class="question-block">
+          <h2>À quel genre vous identifiez-vous ?</h2>
+
+          <div class="radio-scale">
+            <label>
+              <input type="radio" name="genre" value="femme" />
+              Femme
+            </label>
+
+            <label>
+              <input type="radio" name="genre" value="homme" />
+              Homme
+            </label>
+
+            <label>
+              <input type="radio" name="genre" value="non_binaire" />
+              Non-binaire
+            </label>
+
+            <label>
+              <input type="radio" name="genre" value="autre_prefere_ne_pas_repondre" />
+              Autre / préfère ne pas répondre
+            </label>
+          </div>
+        </div>
+
+        <button type="button" id="boutonTerminer" class="success">
+          Terminer
+        </button>
+
+        <div id="messageErreur" class="message warning"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+    const startTime = new Date();
+
+    if (verifierSessionParticipant()) {
+      afficherInfosParticipant("infosParticipant", false);
+
+      const fatigueInput = document.getElementById("fatigueGenerale");
+      const valeurFatigue = document.getElementById("valeurFatigue");
+
+      fatigueInput.addEventListener("input", function () {
+        valeurFatigue.textContent = fatigueInput.value;
+      });
+
+      document.getElementById("boutonTerminer").addEventListener("click", function () {
+        const preferenceVue = requireRadioGroup(
+          "preference_vue",
+          "Veuillez répondre à la question sur votre préférence de vue en jeu."
+        );
+
+        if (preferenceVue === null) {
+          return;
+        }
+
+        const connaissanceMedievalDynasty = requireRadioGroup(
+          "connaissance_medieval_dynasty",
+          "Veuillez indiquer si vous connaissiez Medieval Dynasty avant l’expérience."
+        );
+
+        if (connaissanceMedievalDynasty === null) {
+          return;
+        }
+
+        const fatigueGenerale = requireRangeValue(
+          "fatigueGenerale",
+          "Veuillez indiquer votre niveau de fatigue général le jour de l’expérience."
+        );
+
+        if (fatigueGenerale === null) {
+          return;
+        }
+
+        const age = requireTextValue(
+          "age",
+          "Veuillez indiquer votre âge."
+        );
+
+        if (age === null) {
+          return;
+        }
+
+        const ageNumber = Number(age);
+
+        if (Number.isNaN(ageNumber) || ageNumber < 18 || ageNumber > 99) {
+          showError("Veuillez indiquer un âge valide.");
+          return;
+        }
+
+        const genre = requireRadioGroup(
+          "genre",
+          "Veuillez répondre à la question sur le genre."
+        );
+
+        if (genre === null) {
+          return;
+        }
+
+        const entry = {
+          ...createBaseEntry({
+            questionnaire: "sociodemographie",
+            phase: "post_experience",
+            startTime: startTime
+          }),
+          preference_vue: preferenceVue,
+          connaissance_medieval_dynasty: connaissanceMedievalDynasty,
+          fatigue_generale_jour_experience: fatigueGenerale,
+          age: ageNumber,
+          genre: genre
+        };
+
+        saveDataEntry(entry);
+
+        goToFin();
+      });
+    }
+  </script>
+</body>
+</html>

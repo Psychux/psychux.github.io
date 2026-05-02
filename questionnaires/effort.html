@@ -4,28 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Effort mental</title>
+  <title>Évaluation de la phase</title>
 
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 
 <body>
   <main>
-    <h1>Questionnaire d’effort mental</h1>
+    <h1>Évaluation de la phase</h1>
 
     <section class="card">
       <p id="infosParticipant"></p>
 
       <div class="consent-text">
         <p>
-          Indiquez l’effort mental que vous estimez avoir fourni pendant la phase que vous venez de réaliser.
+          Répondez aux deux questions suivantes en fonction de la phase de jeu que vous venez de réaliser.
         </p>
       </div>
 
-      <form id="formEffort">
+      <form id="formEvaluationPhase">
         <div class="range-container">
           <label for="effortMental">
-            Effort mental fourni pendant cette phase
+            Dans quelle mesure cette phase de jeu vous a-t-elle demandé un effort mental ?
           </label>
 
           <input
@@ -44,6 +44,30 @@
 
           <div class="range-value">
             Valeur sélectionnée : <span id="valeurEffort">50</span>
+          </div>
+        </div>
+
+        <div class="range-container">
+          <label for="plaisir">
+            Dans quelle mesure cette phase de jeu vous a-t-elle procuré du plaisir ?
+          </label>
+
+          <input
+            id="plaisir"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="50"
+          />
+
+          <div class="range-labels">
+            <span>Extrêmement faible</span>
+            <span>Extrêmement élevé</span>
+          </div>
+
+          <div class="range-value">
+            Valeur sélectionnée : <span id="valeurPlaisir">50</span>
           </div>
         </div>
 
@@ -71,10 +95,17 @@
       }
 
       const effortInput = document.getElementById("effortMental");
+      const plaisirInput = document.getElementById("plaisir");
+
       const valeurEffort = document.getElementById("valeurEffort");
+      const valeurPlaisir = document.getElementById("valeurPlaisir");
 
       effortInput.addEventListener("input", function () {
         valeurEffort.textContent = effortInput.value;
+      });
+
+      plaisirInput.addEventListener("input", function () {
+        valeurPlaisir.textContent = plaisirInput.value;
       });
 
       document.getElementById("boutonContinuer").addEventListener("click", function () {
@@ -92,10 +123,20 @@
           return;
         }
 
-        saveEffortMentalResponse({
+        const plaisir = requireRangeValue(
+          "plaisir",
+          "Veuillez indiquer le plaisir ressenti avant de continuer."
+        );
+
+        if (plaisir === null) {
+          return;
+        }
+
+        saveEvaluationPhaseResponse({
           phase: phase,
           startTime: startTime,
-          effortMental: effortMental
+          effortMental: effortMental,
+          plaisir: plaisir
         });
 
         goToNextPhaseAfterEffort(phase);

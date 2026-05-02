@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Fin de l’expérience</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Fin de l’expérience</h1>
+
+    <section class="card">
+      <p id="infosParticipant"></p>
+
+      <div class="consent-text">
+        <h2>Merci pour votre participation</h2>
+
+        <p>
+          L’expérience est maintenant terminée. Merci pour votre participation !
+        </p>
+
+        <p>
+          Vos réponses ont été enregistrées localement sur cet ordinateur.
+        </p>
+
+        <p>
+          Veuillez ne pas fermer cette page ni quitter le navigateur.
+        </p>
+
+        <p>
+          Merci d’appeler l’expérimentateur afin qu’il puisse vérifier l’enregistrement
+          des données et finaliser la passation.
+        </p>
+      </div>
+
+      <div class="message warning" style="display: block;">
+        Ne fermez pas cette page avant d’avoir appelé l’expérimentateur.
+      </div>
+      
+      <button id="boutonVerifierDonnees" class="secondary">
+  Vérifier les données enregistrées
+</button>
+
+<button id="boutonExporterDonnees" class="secondary">
+  Exporter les données du participant
+</button>
+
+<div id="resumeDonnees" class="message" style="display: none;"></div>
+
+      <button id="boutonFin" class="success">
+        Fin de l’expérience
+      </button>
+    </section>
+  </main>
+
+  <script src="../assets/js/questionnaires.js"></script>
+
+  <script>
+  const startTime = new Date();
+
+  function avertirAvantFermeture(event) {
+    event.preventDefault();
+    event.returnValue = "";
+  }
+
+  function telechargerJSON(nomFichier, donnees) {
+    const contenu = JSON.stringify(donnees, null, 2);
+    const blob = new Blob([contenu], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const lien = document.createElement("a");
+    lien.href = url;
+    lien.download = nomFichier;
+    document.body.appendChild(lien);
+    lien.click();
+
+    document.body.removeChild(lien);
+    URL.revokeObjectURL(url);
+  }
+
+  if (verifierSessionParticipant()) {
+    afficherInfosParticipant("infosParticipant", false);
+
+    const entry = {
+      ...createBaseEntry({
+        questionnaire: "fin_experience",
+        phase: "fin_experience",
+        startTime: startTime
+      }),
+      experience_terminee: true
+    };
+
+    saveDataEntry(entry);
+
+    window.addEventListener("beforeunload", avertirAvantFermeture);
+
+    const boutonVerifierDonnees = document.getElementById("boutonVerifierDonnees");
+    const boutonExporterDonnees = document.getElementById("boutonExporterDonnees");
+    const resumeDonnees = document.getElementById("resumeDonnees");
+
+    boutonVerifierDonnees.addEventListener("click", function () {
+      const donneesParticipant = getDataForCurrentParticipant();
+      const participantId = getParticipantId();
+
+      resumeDonnees.style.display = "block";
+      resumeDonnees.innerHTML = `
+        <strong>Données enregistrées pour ${participantId}</strong><br>
+        Nombre d’entrées enregistrées : ${donneesParticipant.length}<br><br>
+        Si ce nombre est supérieur à 0, les données sont bien présentes dans le stockage local du navigateur.
+      `;
+    });
+
+    boutonExporterDonnees.addEventListener("click", function () {
+      const participantId = getParticipantId();
+      const donneesParticipant = getDataForCurrentParticipant();
+      const syntheseParticipant = calculateParticipantSummary(participantId);
+
+      const exportData = {
+        participant_id: participantId,
+        protocol_version: getProtocolVersion(),
+        date_export: new Date().toISOString(),
+        donnees_detaillees: donneesParticipant,
+        synthese_participant: syntheseParticipant
+      };
+
+      telechargerJSON(
+        `donnees_${participantId}.json`,
+        exportData
+      );
+    });
+
+    document.getElementById("boutonFin").addEventListener("click", function () {
+      window.removeEventListener("beforeunload", avertirAvantFermeture);
+      clearPageReprise();
+      window.location.href = "../dashboard.html";
+    });
+  }
+</script>

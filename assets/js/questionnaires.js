@@ -272,14 +272,15 @@ function saveSPESResponses({ phase, startTime, responses }) {
    Effort mental
 ----------------------------- */
 
-function saveEffortMentalResponse({ phase, startTime, effortMental }) {
+function saveEvaluationPhaseResponse({ phase, startTime, effortMental, plaisir }) {
   const entry = {
     ...createBaseEntry({
-      questionnaire: "effort_mental",
+      questionnaire: "evaluation_phase",
       phase: phase,
       startTime: startTime
     }),
-    effort_mental: Number(effortMental)
+    effort_mental: Number(effortMental),
+    plaisir: Number(plaisir)
   };
 
   saveDataEntry(entry);
@@ -362,7 +363,7 @@ function goToNextPhaseAfterEffort(phase) {
     phase1: `../${condition}/phase2.html`,
     phase2: `../${condition}/phase3.html`,
     phase3: `../${condition}/phase4.html`,
-    phase4: "plaisir.html"
+    phase4: "sociodemographie.html"
     };
 
   const nextPage = nextPages[phase];
@@ -386,22 +387,15 @@ function goToFin() {
 /* -----------------------------
    Export futur : préparation
 ----------------------------- */
-
-function getDataForCurrentParticipant() {
-  const participantId = getParticipantId();
-
-  return getStoredData().filter(
-    entry => entry.participant_id === participantId
-  );
-}
-
 function calculateParticipantSummary(participantId = getParticipantId()) {
   const data = getStoredData().filter(
     entry => entry.participant_id === participantId
   );
 
   const spesEntries = data.filter(entry => entry.questionnaire === "spes");
-  const effortEntries = data.filter(entry => entry.questionnaire === "effort_mental");
+  const evaluationEntries = data.filter(entry => entry.questionnaire === "evaluation_phase");
+  const vviqEntry = data.find(entry => entry.questionnaire === "vviq2");
+  const socioEntry = data.find(entry => entry.questionnaire === "sociodemographie");
 
   const summary = {
     protocol_version: getProtocolVersion(),
@@ -409,17 +403,41 @@ function calculateParticipantSummary(participantId = getParticipantId()) {
     condition_experimentale: getConditionExperimentale()
   };
 
+  /* VVIQ-2 */
+  if (vviqEntry) {
+    for (let i = 1; i <= 16; i++) {
+      const itemNumber = String(i).padStart(2, "0");
+      const key = `vviq_${itemNumber}`;
+      summary[key] = vviqEntry[key];
+    }
+
+    summary.vviq_total = vviqEntry.vviq_total;
+  }
+
+  /* SPES */
   for (const entry of spesEntries) {
     const phase = entry.phase;
+
+    summary[`spes_01_${phase}`] = entry.spes_01;
+    summary[`spes_02_${phase}`] = entry.spes_02;
+    summary[`spes_03_${phase}`] = entry.spes_03;
+    summary[`spes_04_${phase}`] = entry.spes_04;
+    summary[`spes_05_${phase}`] = entry.spes_05;
+    summary[`spes_06_${phase}`] = entry.spes_06;
+    summary[`spes_07_${phase}`] = entry.spes_07;
+    summary[`spes_08_${phase}`] = entry.spes_08;
 
     summary[`spes_sl_total_${phase}`] = entry.spes_sl_total;
     summary[`spes_pa_total_${phase}`] = entry.spes_pa_total;
     summary[`spes_total_${phase}`] = entry.spes_total;
   }
 
-  for (const entry of effortEntries) {
+  /* Évaluation de phase : effort mental + plaisir */
+  for (const entry of evaluationEntries) {
     const phase = entry.phase;
+
     summary[`effort_mental_${phase}`] = entry.effort_mental;
+    summary[`plaisir_${phase}`] = entry.plaisir;
   }
 
   const spesTotalValues = spesEntries
@@ -434,20 +452,42 @@ function calculateParticipantSummary(participantId = getParticipantId()) {
     .map(entry => Number(entry.spes_pa_total))
     .filter(value => !Number.isNaN(value));
 
-  const effortValues = effortEntries
+  const effortValues = evaluationEntries
     .map(entry => Number(entry.effort_mental))
     .filter(value => !Number.isNaN(value));
 
-  const effortValuesPhases1To4 = effortEntries
+  const effortValuesPhases1To4 = evaluationEntries
     .filter(entry => ["phase1", "phase2", "phase3", "phase4"].includes(entry.phase))
     .map(entry => Number(entry.effort_mental))
+    .filter(value => !Number.isNaN(value));
+
+  const plaisirValues = evaluationEntries
+    .map(entry => Number(entry.plaisir))
+    .filter(value => !Number.isNaN(value));
+
+  const plaisirValuesPhases1To4 = evaluationEntries
+    .filter(entry => ["phase1", "phase2", "phase3", "phase4"].includes(entry.phase))
+    .map(entry => Number(entry.plaisir))
     .filter(value => !Number.isNaN(value));
 
   summary.spes_total_moyenne = mean(spesTotalValues);
   summary.spes_sl_moyenne = mean(spesSlValues);
   summary.spes_pa_moyenne = mean(spesPaValues);
+
   summary.effort_moyen_total_avec_familiarisation = mean(effortValues);
   summary.effort_moyen_phases_1_4 = mean(effortValuesPhases1To4);
+
+  summary.plaisir_moyen_total_avec_familiarisation = mean(plaisirValues);
+  summary.plaisir_moyen_phases_1_4 = mean(plaisirValuesPhases1To4);
+
+  /* Sociodémographie */
+  if (socioEntry) {
+    summary.preference_vue = socioEntry.preference_vue;
+    summary.connaissance_medieval_dynasty = socioEntry.connaissance_medieval_dynasty;
+    summary.fatigue_generale_jour_experience = socioEntry.fatigue_generale_jour_experience;
+    summary.age = socioEntry.age;
+    summary.genre = socioEntry.genre;
+  }
 
   return summary;
 }
