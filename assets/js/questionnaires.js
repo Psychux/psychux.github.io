@@ -65,6 +65,38 @@ function afficherInfosParticipant(elementId = "infosParticipant", afficherCondit
       `Participant : ${participantId}`;
   }
 }
+
+/* -----------------------------
+   Reprise de session
+----------------------------- */
+
+const STORAGE_KEY_REPRISE = "page_reprise";
+
+function setPageReprise(url) {
+  const absoluteUrl = new URL(url, window.location.href).href;
+  localStorage.setItem(STORAGE_KEY_REPRISE, absoluteUrl);
+}
+
+function setPageRepriseActuelle() {
+  localStorage.setItem(STORAGE_KEY_REPRISE, window.location.href);
+}
+
+function getPageReprise() {
+  return localStorage.getItem(STORAGE_KEY_REPRISE);
+}
+
+function clearPageReprise() {
+  localStorage.removeItem(STORAGE_KEY_REPRISE);
+}
+
+function naviguerVers(url) {
+  setPageReprise(url);
+  window.location.href = url;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  setPageRepriseActuelle();
+});
 /* -----------------------------
    Données locales
 ----------------------------- */
