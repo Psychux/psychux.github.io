@@ -341,6 +341,10 @@ function saveConsentementResponse({ startTime, accepted }) {
    Redirections du protocole
 ----------------------------- */
 
+/* -----------------------------
+   Redirections du protocole
+----------------------------- */
+
 function getConditionFolder() {
   const condition = getConditionExperimentale();
 
@@ -352,15 +356,27 @@ function getConditionFolder() {
 }
 
 function goToDashboard() {
-  window.location.href = "../dashboard.html";
+  clearPageReprise();
+
+  const path = window.location.pathname;
+
+  if (path.includes("/questionnaires/vviq2/")) {
+    window.location.href = "../../dashboard.html";
+  } else if (path.includes("/questionnaires/")) {
+    window.location.href = "../dashboard.html";
+  } else if (path.includes("/ivs/") || path.includes("/im/") || path.includes("/si/")) {
+    window.location.href = "../dashboard.html";
+  } else {
+    window.location.href = "dashboard.html";
+  }
 }
 
 function goToIntroduction() {
-  window.location.href = "introduction.html";
+  naviguerVers("introduction.html");
 }
 
 function goToVVIQ2() {
-  window.location.href = "vviq2/introduction.html";
+  naviguerVers("vviq2/introduction.html");
 }
 
 function goToConditionFamiliarisation() {
@@ -371,15 +387,15 @@ function goToConditionFamiliarisation() {
     return;
   }
 
-  window.location.href = `../${condition}/familiarisation.html`;
+  naviguerVers(`../${condition}/familiarisation.html`);
 }
 
 function goToSPES(phase) {
-  window.location.href = `../questionnaires/spes.html?phase=${encodeURIComponent(phase)}`;
+  naviguerVers(`../questionnaires/spes.html?phase=${encodeURIComponent(phase)}`);
 }
 
 function goToEffort(phase) {
-  window.location.href = `../questionnaires/effort.html?phase=${encodeURIComponent(phase)}`;
+  naviguerVers(`../questionnaires/effort.html?phase=${encodeURIComponent(phase)}`);
 }
 
 function goToNextPhaseAfterEffort(phase) {
@@ -396,7 +412,7 @@ function goToNextPhaseAfterEffort(phase) {
     phase2: `../${condition}/phase3.html`,
     phase3: `../${condition}/phase4.html`,
     phase4: "sociodemographie.html"
-    };
+  };
 
   const nextPage = nextPages[phase];
 
@@ -405,15 +421,15 @@ function goToNextPhaseAfterEffort(phase) {
     return;
   }
 
-  window.location.href = nextPage;
+  naviguerVers(nextPage);
 }
 
 function goToSociodemographie() {
-  window.location.href = "sociodemographie.html";
+  naviguerVers("sociodemographie.html");
 }
 
 function goToFin() {
-  window.location.href = "fin.html";
+  naviguerVers("fin.html");
 }
 
 /* -----------------------------
