@@ -297,14 +297,7 @@ function initDashboard() {
 
     saveParticipantSettings(participant, condition);
     afficherSessionActive();
-  });
-  const pageReprise = getPageReprise();
-  
-  if (pageReprise) {
-    boutonReprendre.classList.remove("hidden");
-  } else {
-    boutonReprendre.classList.add("hidden");
-  }  
+  }); 
 
   boutonDemarrer.addEventListener("click", function () {
     window.location.href = "questionnaires/consentement.html";
