@@ -36,7 +36,7 @@ function verifierSessionParticipant() {
         <p>
           Veuillez appeler l’expérimentateur.
         </p>
-        <button onclick="window.location.href='../dashboard.html'">
+        <button onclick="goToDashboard()">
           Retour au tableau de bord
         </button>
       </main>
@@ -435,6 +435,13 @@ function goToFin() {
 /* -----------------------------
    Export futur : préparation
 ----------------------------- */
+function getDataForCurrentParticipant() {
+  const participantId = getParticipantId();
+
+  return getStoredData().filter(
+    entry => entry.participant_id === participantId
+  );
+}
 function calculateParticipantSummary(participantId = getParticipantId()) {
   const data = getStoredData().filter(
     entry => entry.participant_id === participantId
@@ -448,7 +455,8 @@ function calculateParticipantSummary(participantId = getParticipantId()) {
   const summary = {
     protocol_version: getProtocolVersion(),
     participant_id: participantId,
-    condition_experimentale: getConditionExperimentale()
+    condition_experimentale:
+      data.find(entry => entry.condition_experimentale)?.condition_experimentale || getConditionExperimentale()
   };
 
   /* VVIQ-2 */
