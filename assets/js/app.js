@@ -334,6 +334,7 @@ function initDashboard() {
     resumeDonnees.innerHTML = "";
 
     boutonDemarrer.classList.add("hidden");
+    boutonReprendre.classList.add("hidden");
     masquerBoutonsExport();
   });
 
@@ -434,6 +435,14 @@ function initDashboard() {
     `;
 
     boutonDemarrer.classList.remove("hidden");
+
+    const pageReprise = localStorage.getItem("page_reprise");
+
+    if (pageReprise) {
+     boutonReprendre.classList.remove("hidden");
+    } else {
+      boutonReprendre.classList.add("hidden");
+    }
     afficherBoutonsExport();
   }
 
