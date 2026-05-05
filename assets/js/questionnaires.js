@@ -348,10 +348,6 @@ function saveConsentementResponse({ startTime, accepted }) {
    Redirections du protocole
 ----------------------------- */
 
-/* -----------------------------
-   Redirections du protocole
------------------------------ */
-
 function getConditionFolder() {
   const condition = getConditionExperimentale();
 
@@ -533,9 +529,6 @@ function calculateParticipantSummary(participantId = getParticipantId()) {
     .filter(entry => ["phase1", "phase2", "phase3", "phase4"].includes(entry.phase))
     .map(entry => Number(entry.plaisir))
     .filter(value => !Number.isNaN(value));
-    const respectConsigneValues = evaluationEntries
-   .map(entry => Number(entry.respect_consigne))
-   .filter(value => !Number.isNaN(value));
 
   const respectConsigneValues = evaluationEntries
    .map(entry => Number(entry.respect_consigne))
