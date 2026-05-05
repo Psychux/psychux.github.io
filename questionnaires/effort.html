@@ -70,6 +70,39 @@
             Valeur sélectionnée : <span id="valeurPlaisir">50</span>
           </div>
         </div>
+        <div class="likert-question">
+
+  <h2>Dans quelle mesure avez-vous réussi à respecter la consigne de cette phase ?</h2>
+
+  <div class="likert-scale">
+    <label>
+      <input type="radio" name="respect_consigne" value="1" />
+      <span class="likert-number">1</span>
+      <span class="likert-label">Pas du tout</span>
+    </label>
+
+    <label>
+      <input type="radio" name="respect_consigne" value="2" />
+      <span class="likert-number">2</span>
+    </label>
+
+    <label>
+      <input type="radio" name="respect_consigne" value="3" />
+      <span class="likert-number">3</span>
+    </label>
+
+    <label>
+      <input type="radio" name="respect_consigne" value="4" />
+      <span class="likert-number">4</span>
+    </label>
+
+    <label>
+      <input type="radio" name="respect_consigne" value="5" />
+      <span class="likert-number">5</span>
+      <span class="likert-label">Énormément</span>
+    </label>
+  </div>
+</div>
 
         <button type="button" id="boutonContinuer" class="success">
           Continuer
@@ -122,21 +155,30 @@
         if (effortMental === null) {
           return;
         }
-
         const plaisir = requireRangeValue(
           "plaisir",
           "Veuillez indiquer le plaisir ressenti avant de continuer."
         );
 
         if (plaisir === null) {
-          return;
+           return;
+        }
+
+        const respectConsigne = requireRadioGroup(
+          "respect_consigne",
+          "Veuillez indiquer dans quelle mesure vous avez réussi à respecter la consigne de cette phase."
+        );
+
+        if (respectConsigne === null) {
+         return;
         }
 
         saveEvaluationPhaseResponse({
-          phase: phase,
-          startTime: startTime,
-          effortMental: effortMental,
-          plaisir: plaisir
+         phase: phase,
+         startTime: startTime,
+         effortMental: effortMental,
+         plaisir: plaisir,
+         respectConsigne: respectConsigne
         });
 
         goToNextPhaseAfterEffort(phase);
