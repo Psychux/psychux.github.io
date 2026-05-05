@@ -366,7 +366,7 @@ function initDashboard() {
       Genre : ${synthese.genre ?? "non disponible"}<br>
       SPES moyen : ${synthese.spes_total_moyenne ?? "non disponible"}<br>
       Effort moyen phases 1 à 4 : ${synthese.effort_moyen_phases_1_4 ?? "non disponible"}<br>
-      Plaisir moyen phases 1 à 4 : ${synthese.plaisir_moyen_phases_1_4 ?? "non disponible"}
+      Plaisir moyen phases 1 à 4 : ${synthese.plaisir_moyen_phases_1_4 ?? "non disponible"}<br>
       Respect consigne moyen phases 1 à 4 : ${synthese.respect_consigne_moyen_phases_1_4 ?? "non disponible"}<br>
     `;
   });
@@ -444,7 +444,7 @@ function initDashboard() {
 
     boutonDemarrer.classList.remove("hidden");
 
-    const pageReprise = localStorage.getItem("page_reprise");
+    const pageReprise = getPageReprise();
 
     if (pageReprise) {
      boutonReprendre.classList.remove("hidden");
