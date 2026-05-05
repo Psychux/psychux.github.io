@@ -546,11 +546,6 @@ const respectConsigneValuesPhases1To4 = evaluationEntries
   .map(entry => Number(entry.respect_consigne))
   .filter(value => !Number.isNaN(value));
 
-const respectConsigneValuesPhases1To4 = evaluationEntries
-  .filter(entry => ["phase1", "phase2", "phase3", "phase4"].includes(entry.phase))
-  .map(entry => Number(entry.respect_consigne))
-  .filter(value => !Number.isNaN(value));
-
   summary.spes_total_moyenne = mean(spesTotalValues);
   summary.spes_sl_moyenne = mean(spesSlValues);
   summary.spes_pa_moyenne = mean(spesPaValues);
