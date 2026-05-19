@@ -194,6 +194,23 @@ function calculateParticipantSummary(participantId = getCurrentParticipant()) {
 
   summary.spes_total_moyenne = mean(spesTotalValues);
   summary.mps_total_moyenne = mean(mpsTotalValues);
+
+  const mpsPresencePhysiqueValues = mpsEntries
+    .map(entry => Number(entry.mps_presence_physique_total))
+    .filter(value => !Number.isNaN(value));
+
+  const mpsSelfPresenceValues = mpsEntries
+    .map(entry => Number(entry.mps_self_presence_total))
+    .filter(value => !Number.isNaN(value));
+
+  summary.mps_presence_physique_moyenne = mean(mpsPresencePhysiqueValues);
+  summary.mps_self_presence_moyenne = mean(mpsSelfPresenceValues);
+
+  const guessMoyenneTotaleValues = guessEntries
+    .map(entry => Number(entry.guess_moyenne))
+    .filter(value => !Number.isNaN(value));
+
+  summary.guess_moyenne_totale_avec_familiarisation = mean(guessMoyenneTotaleValues);
   summary.guess_moyenne_phases_1_4 = mean(guessMoyennePhases1to4Values);
   summary.effort_moyen_phases_1_4 = mean(effortValuesPhases1To4);
   summary.respect_consigne_moyen_phases_1_4 = mean(respectConsigneValuesPhases1To4);
@@ -231,17 +248,62 @@ function telechargerJSON(nomFichier, donnees) {
   URL.revokeObjectURL(url);
 }
 
+const COLONNES_CSV = [
+  "protocol_version",
+  "participant_id",
+  "condition_experimentale",
+
+  /* VVIQ-2 */
+  "vviq_01", "vviq_02", "vviq_03", "vviq_04",
+  "vviq_05", "vviq_06", "vviq_07", "vviq_08",
+  "vviq_09", "vviq_10", "vviq_11", "vviq_12",
+  "vviq_13", "vviq_14", "vviq_15", "vviq_16",
+  "vviq_total",
+
+  /* MPS par phase */
+  ...["familiarisation", "phase1", "phase2", "phase3", "phase4"].flatMap(p => [
+    `mps_pp_01_${p}`, `mps_pp_02_${p}`, `mps_pp_03_${p}`, `mps_pp_04_${p}`, `mps_pp_05_${p}`,
+    `mps_sp_01_${p}`, `mps_sp_02_${p}`, `mps_sp_03_${p}`, `mps_sp_04_${p}`, `mps_sp_05_${p}`,
+    `mps_presence_physique_total_${p}`, `mps_self_presence_total_${p}`, `mps_total_${p}`
+  ]),
+  "mps_total_moyenne",
+  "mps_presence_physique_moyenne",
+  "mps_self_presence_moyenne",
+
+  /* GUESS par phase */
+  ...["familiarisation", "phase1", "phase2", "phase3", "phase4"].flatMap(p => [
+    `guess_01_${p}`, `guess_02_${p}`, `guess_03_${p}`, `guess_03_recote_${p}`,
+    `guess_04_${p}`, `guess_05_${p}`,
+    `guess_total_${p}`, `guess_moyenne_${p}`
+  ]),
+  "guess_moyenne_totale_avec_familiarisation",
+  "guess_moyenne_phases_1_4",
+
+  /* Effort et respect consigne par phase */
+  ...["familiarisation", "phase1", "phase2", "phase3", "phase4"].flatMap(p => [
+    `effort_mental_${p}`, `respect_consigne_${p}`
+  ]),
+  "effort_moyen_total_avec_familiarisation",
+  "effort_moyen_phases_1_4",
+  "respect_consigne_moyen_total_avec_familiarisation",
+  "respect_consigne_moyen_phases_1_4",
+
+  /* Sociodémographie */
+  "preference_vue",
+  "connaissance_medieval_dynasty",
+  "pratique_sportive",
+  "frequence_jeu",
+  "fatigue_generale_jour_experience",
+  "age",
+  "genre"
+];
+
 function convertirObjetEnCSV(objets) {
   if (!objets || objets.length === 0) {
     return "";
   }
 
-  const colonnes = Array.from(
-    objets.reduce((set, objet) => {
-      Object.keys(objet).forEach(key => set.add(key));
-      return set;
-    }, new Set())
-  );
+  const colonnes = COLONNES_CSV;
 
   const lignes = objets.map(objet => {
     return colonnes.map(colonne => {
